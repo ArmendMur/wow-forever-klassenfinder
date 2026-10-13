@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WoW Forever – DPS Klassen-Kompass</title>
+  <meta name="description" content="Finde in 2 Minuten deine perfekte DPS-Klasse & Spezialisierung für WoW Forever, ohne stundenlang jede Klasse antesten zu müssen.">
+  
+  <!-- Google Fonts: Cinzel für epische Warcraft-Überschriften & Inter für lesbare UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Dynamische Funken / Partikel im Hintergrund -->
+  <canvas id="particles-bg"></canvas>
+
+  <div class="site-container">
+    <!-- Header -->
+    <header class="site-header">
+      <div class="logo-group">
+        <div class="logo-emblem">⚔️</div>
+        <div class="logo-titles">
+          <h1>WoW Forever</h1>
+          <div class="subtitle">DPS Klassen-Kompass & Spezialisierungs-Finder</div>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <span class="pill-badge">✨ Classic Azeroth • Nur DPS</span>
+        <button type="button" class="btn-icon" id="sound-toggle-btn" title="Sound: An">
+          <span id="sound-icon">🔊</span> <span>Audio SFX</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="view-tabs" aria-label="Hauptnavigation">
+      <button type="button" class="tab-btn active" data-view="quiz">
+        <span>🧭</span> <span>DPS-Profiler (Quiz)</span>
+      </button>
+      <button type="button" class="tab-btn" data-view="browse">
+        <span>📜</span> <span>Klassen-Katalog (20 Specs)</span>
+      </button>
+      <button type="button" class="tab-btn" data-view="duel">
+        <span>⚔️</span> <span>Head-to-Head Duell</span>
+      </button>
+    </nav>
+
+    <!-- ====================================================================
+         VIEW 1: QUIZ & PROFILER
+         ==================================================================== -->
+    <main id="view-quiz">
+      <!-- Quiz Bildschirm -->
+      <section id="quiz-screen" class="quiz-container">
+        <div class="quiz-progress-bar-wrap">
+          <div class="progress-header">
+            <span id="quiz-step-text">FRAGE 1 VON 10</span>
+            <span id="quiz-percent-text">10%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <div class="question-header">
+            <h2 class="question-title" id="question-title">Lade Frage...</h2>
+            <p class="question-subtitle" id="question-subtitle">...</p>
+          </div>
+
+          <div class="options-grid" id="options-grid">
+            <!-- Dynamisch durch app.js befüllt -->
+          </div>
+
+          <div class="quiz-footer">
+            <button type="button" class="btn-secondary" id="btn-prev" disabled>
+              <span>← Zurück</span>
+            </button>
+            <button type="button" class="btn-primary" id="btn-next" disabled>
+              <span>Weiter</span> <span>→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ergebnis-Bildschirm -->
+      <section id="results-screen" class="results-container hidden">
+        <div class="result-celebration">
+          <div class="result-tagline">⚔️ Dein persönliches DPS-Profil für WoW Forever ⚔️</div>
+          <h2 class="result-title">Deine ideale Spezialisierung steht fest!</h2>
+        </div>
+
+        <!-- Sieger Spotlight -->
+        <div id="winner-spotlight">
+          <!-- Dynamisch durch app.js befüllt -->
+        </div>
+
+        <!-- Top Alternativen / Runner-Ups -->
+        <div class="runner-ups-section">
+          <h3><span>🥈</span> Starke Alternativen für dein Profil</h3>
+          <div id="runners-container">
+            <!-- Dynamisch befüllt -->
+          </div>
+        </div>
+
+        <!-- Einsteiger-Glossar / Hilfe -->
+        <div class="beginner-guide-box">
+          <button type="button" class="beginner-guide-toggle" id="btn-toggle-guide-results">
+            <span>💡 Was bedeuten die Eigenschaften genau? (Klick für Einsteiger-Hilfe)</span>
+            <span id="guide-arrow">▼</span>
+          </button>
+          <div class="beginner-guide-content hidden" id="guide-content-results">
+            <div class="guide-item">
+              <strong>💥 Wuchtige Einzelschläge</strong>
+              <span>Wie heftig ein einzelner Treffer reinhaut. Zieht dem Monster direkt einen riesigen Batzen Leben ab.</span>
+            </div>
+            <div class="guide-item">
+              <strong>⏱️ Gleichmäßiger Dauerschaden</strong>
+              <span>Wie hoch dein Schaden ohne Pausen ist – pausenlos gleichbleibend schneller Druck.</span>
+            </div>
+            <div class="guide-item">
+              <strong>🌪️ Mehrere Monster gleichzeitig</strong>
+              <span>Wie gut du gegen 2, 3 oder ganze Gruppen von Monstern auf einmal kämpfen kannst.</span>
+            </div>
+            <div class="guide-item">
+              <strong>🛡️ Hilfe & Stärkung für Freunde</strong>
+              <span>Ob du deinen Freunden Stärkungszauber (Auren, Totems), Teleport-Portale oder Lebensretter spendierst.</span>
+            </div>
+            <div class="guide-item">
+              <strong>❤️ Zähigkeit (Hält viel aus)</strong>
+              <span>Wie viele Schläge du einstecken kannst, bevor dein Charakter in Gefahr gerät.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Aktionen -->
+        <div class="results-actions">
+          <button type="button" class="btn-primary" id="btn-share-discord">
+            <span>📋 Für Discord kopieren</span>
+          </button>
+          <button type="button" class="btn-secondary" id="btn-restart-quiz">
+            <span>🔄 Test wiederholen</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ====================================================================
+         VIEW 2: BROWSE & DIRECTORY (Alle 20 Specs)
+         ==================================================================== -->
+    <section id="view-browse" class="hidden">
+      <div class="hero-banner">
+        <h2>Alle 20 DPS-Spezialisierungen im Überblick</h2>
+        <p>Keine Lust auf ein Quiz oder willst du einfach alle Möglichkeiten für WoW Forever durchstöbern? Filtere nach Spielstil, Rüstung oder suche direkt nach deiner Lieblingsklasse.</p>
+      </div>
+
+      <div class="browse-filter-bar">
+        <div class="filter-group">
+          <button type="button" class="filter-btn active" data-filter="all">Alle (20)</button>
+          <button type="button" class="filter-btn" data-filter="melee">⚔️ Nahkampf</button>
+          <button type="button" class="filter-btn" data-filter="ranged">🏹 Fernkampf</button>
+          <button type="button" class="filter-btn" data-filter="plate">🛡️ Platte</button>
+          <button type="button" class="filter-btn" data-filter="mail">⛓️ Kette</button>
+          <button type="button" class="filter-btn" data-filter="leather">🥋 Leder</button>
+          <button type="button" class="filter-btn" data-filter="cloth">✨ Stoff</button>
+        </div>
+
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="catalog-search" placeholder="Klasse, Spec oder Suchwort...">
+        </div>
+      </div>
+
+      <div class="specs-catalog-grid" id="catalog-grid">
+        <!-- Durch app.js befüllt -->
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 3: HEAD-TO-HEAD DUEL (Vergleich)
+         ==================================================================== -->
+    <section id="view-duel" class="duel-container hidden">
+      <div class="duel-header">
+        <h2>Head-to-Head Direktvergleich</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Schwankst du zwischen zwei Klassen? Lass sie im direkten Duell gegeneinander antreten.</p>
+      </div>
+
+      <div class="duel-selectors-bar">
+        <div class="duel-select-box">
+          <label for="duel-select-1">Kämpfer 1</label>
+          <select id="duel-select-1" class="duel-dropdown"></select>
+        </div>
+
+        <div class="duel-vs-badge">VS</div>
+
+        <div class="duel-select-box">
+          <label for="duel-select-2">Kämpfer 2</label>
+          <select id="duel-select-2" class="duel-dropdown"></select>
+        </div>
+      </div>
+
+      <div class="duel-comparison-table" id="duel-result-wrap">
+        <!-- Dynamisch befüllt -->
+      </div>
+    </section>
+  </div>
+
+  <!-- Detail Modal Dialog -->
+  <div class="modal-overlay" id="spec-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-title">Spezialisierungs-Details</h3>
+        <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Schließen">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Dynamisch befüllt -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Benachrichtigung -->
+  <div class="toast-notice" id="toast">
+    <span>✓</span> <span id="toast-msg">Text</span>
+  </div>
+
+  <!-- Script Einbindungen -->
+  <script src="specs-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
