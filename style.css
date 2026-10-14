@@ -43,6 +43,10 @@
   --shadow-gold: 0 0 20px rgba(212, 167, 66, 0.2);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

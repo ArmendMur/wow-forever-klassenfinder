@@ -377,11 +377,39 @@ function renderQuizQuestion() {
   }
 }
 
+// Sanftes Hochscrollen zur aktuellen Frage oder den Ergebnissen (besonders wichtig für Smartphones)
+function scrollToQuizTop() {
+  requestAnimationFrame(() => {
+    const target = dom.quizScreen;
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const absoluteTop = window.pageYOffset + rect.top;
+    window.scrollTo({
+      top: Math.max(0, absoluteTop - 20),
+      behavior: "smooth"
+    });
+  });
+}
+
+function scrollToResultsTop() {
+  requestAnimationFrame(() => {
+    const target = dom.resultsScreen;
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const absoluteTop = window.pageYOffset + rect.top;
+    window.scrollTo({
+      top: Math.max(0, absoluteTop - 20),
+      behavior: "smooth"
+    });
+  });
+}
+
 dom.btnPrev.addEventListener("click", () => {
   sounds.play("click");
   if (state.quizIndex > 0) {
     state.quizIndex--;
     renderQuizQuestion();
+    scrollToQuizTop();
   }
 });
 
@@ -393,10 +421,12 @@ dom.btnNext.addEventListener("click", () => {
     sounds.play("click");
     state.quizIndex++;
     renderQuizQuestion();
+    scrollToQuizTop();
   } else {
     // Quiz fertig -> Auswertung berechnen
     sounds.play("fanfare");
     calculateAndShowResults();
+    scrollToResultsTop();
   }
 });
 
@@ -595,6 +625,7 @@ function renderResultsScreen(ranked) {
     dom.resultsScreen.classList.add("hidden");
     dom.quizScreen.classList.remove("hidden");
     renderQuizQuestion();
+    scrollToQuizTop();
   };
 }
 
