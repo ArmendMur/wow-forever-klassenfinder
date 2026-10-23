@@ -669,9 +669,9 @@ function renderBrowseGrid() {
 
   const filtered = WOW_SPECS.filter((spec) => {
     const c = WOW_CLASSES[spec.classId];
-    // Filter prüfen
-    if (state.activeFilter === "melee" && spec.rangeType !== "melee") return false;
-    if (state.activeFilter === "ranged" && spec.rangeType !== "ranged") return false;
+    // Filter prüfen (Hybrid wie der WoW Forever Überlebens-Jäger erscheint in Nah- und Fernkampf)
+    if (state.activeFilter === "melee" && spec.rangeType !== "melee" && spec.rangeType !== "hybrid") return false;
+    if (state.activeFilter === "ranged" && spec.rangeType !== "ranged" && spec.rangeType !== "hybrid") return false;
     if (state.activeFilter === "plate" && c.armorShort !== "Platte") return false;
     if (state.activeFilter === "mail" && c.armorShort !== "Kette") return false;
     if (state.activeFilter === "leather" && c.armorShort !== "Leder") return false;
